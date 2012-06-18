@@ -44,5 +44,14 @@ class sensu::package {
 		mode   => '0755',
 		require => File['/etc/sensu/plugins'],
 	}
+	file { '/etc/sensu/plugins/check_disk.rb':
+		ensure => present,
+		source => 'puppet:///modules/sensu/plugins/check-mem.sh',
+		owner  => root,
+		group  => root,
+		mode   => '0755',
+		require => File['/etc/sensu/plugins'],
+	}
+
 	sensu_clean_config { $::fqdn: }
 }
