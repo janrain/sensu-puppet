@@ -46,24 +46,28 @@ define sensu::server(
   }
 
   Service {
-    ensure => running,
-    enable => true,
+    ensure   => running,
+    provider => debian,
+    enable   => true,
   }
 
   service {
     'sensu-server':
-      require => [
+      provider => debian,
+      require  => [
         Sensu_rabbitmq_config[$::fqdn],
         Sensu_redis_config[$::fqdn],
       ];
     'sensu-api':
-      require => [
+      provider => debian,
+      require  => [
         Sensu_rabbitmq_config[$::fqdn],
         Sensu_api_config[$::fqdn],
         Service['sensu-server'],
       ];
     'sensu-dashboard':
-      require => [
+      provider => debian,
+      require  => [
         Sensu_rabbitmq_config[$::fqdn],
         Sensu_dashboard_config[$::fqdn],
         Service['sensu-api'],

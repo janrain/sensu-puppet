@@ -31,6 +31,7 @@ define sensu::client(
   service { 'sensu-client':
     ensure  => running,
     enable  => true,
+    service => debian,
     require => [
       Sensu_rabbitmq_config[$::fqdn],
       Sensu_client_config[$::fqdn],
