@@ -44,7 +44,7 @@ class sensu::package {
 		mode   => '0755',
 		require => File['/etc/sensu/plugins'],
 	}
-	file { '/etc/sensu/plugins/check_mem.rb':
+	file { '/etc/sensu/plugins/check_mem.sh':
 		ensure => present,
 		source => 'puppet:///modules/sensu/plugins/check-mem.sh',
 		owner  => root,
