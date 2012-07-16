@@ -52,6 +52,8 @@ class sensu::package {
 		mode   => '0755',
 		require => File['/etc/sensu/plugins'],
 	}
-
+  file { '/etc/init/sensu.conf':
+    ensure => absent,
+  }
 	sensu_clean_config { $::fqdn: }
 }
