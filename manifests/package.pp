@@ -58,7 +58,12 @@ class sensu::package {
     owner    => root,
     group    => root,
     mode     => '0755',
-    require  => File['/etc/sensu/plugins'],
+    require  => [File['/etc/sensu/plugins'],Package['haproxy-gem'],
+  }
+  package { 'haproxy':
+    ensure   => latest,
+    provider => 'gem',
+    alias    => 'haproxy-gem',
   }
   file { '/etc/init/sensu-client.conf':
     ensure => absent,
