@@ -58,12 +58,13 @@ class sensu::package {
     owner    => root,
     group    => root,
     mode     => '0755',
-    require  => [File['/etc/sensu/plugins'],Package['haproxy-gem']],
+    require  => File['/etc/sensu/plugins'],
   }
-  package { 'haproxy-gem':
-    ensure   => latest,
-    provider => 'gem',
-    name     => 'haproxy',
+  #this is because haproxy package conflicts with the apt package!
+  exec { "gem-package-haproxy":
+    path       => '/usr/bin/gem',
+    command    => 'gem install --version 0.0.4',
+    unless     => "gem list --local | grep 'haproxy.*0.0.4'"
   }
   file { '/etc/init/sensu-client.conf':
     ensure => absent,
