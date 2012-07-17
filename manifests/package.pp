@@ -62,7 +62,7 @@ class sensu::package {
   }
   #this is because haproxy package conflicts with the apt package!
   exec { "gem-package-haproxy":
-    command    => 'gem install --version 0.0.4',
+    command    => 'gem install haproxy --version 0.0.4',
     unless     => "gem list --local | grep 'haproxy.*0.0.4'"
   }
   file { '/etc/init/sensu-client.conf':
