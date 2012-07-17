@@ -52,6 +52,14 @@ class sensu::package {
 		mode   => '0755',
 		require => File['/etc/sensu/plugins'],
 	}
+	file { '/etc/sensu/plugins/check-haproxy.rb':
+	  ensure   => present,
+	  source   => 'puppet:///modules/sensu/plugins/check-haproxy.rb',
+    owner    => root,
+    group    => root,
+    mode     => '0755',
+    require  => File['/etc/sensu/plugins'],
+  }
   file { '/etc/init/sensu-client.conf':
     ensure => absent,
   }
