@@ -44,7 +44,7 @@ class CheckHAProxy < Sensu::Plugin::Check::CLI
       warning "No services could be found in haproxy matching /#{service}/"
     else
       service_collection.each do |srv|
-        if srv[:status] != "UP" && srv[:lastchg] > 300
+        if srv[:status] != "UP" && srv[:lastchg].to_i > 300
           failed_services << srv
         end
       end
