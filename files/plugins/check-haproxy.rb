@@ -51,7 +51,7 @@ class CheckHAProxy < Sensu::Plugin::Check::CLI
       if failed_services.empty?
         ok "All #{service_collection.size} /#{service}/ services are up"
       else
-        critical "These services are not UP: #{failed_services.collect{|srv| srv[:svname]}.join(', ')}"
+        critical "These services are not UP: #{failed_services.collect{|srv| srv[:svname]+' Changed:'+srv[:lastchg]}.join(', ')}"
       end
     end
   end
