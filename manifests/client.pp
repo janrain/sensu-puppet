@@ -7,7 +7,8 @@ define sensu::client(
                       $rabbitmq_user            = 'sensu',
                       $rabbitmq_vhost           = '/sensu',
                       $address                  = $ipaddress,
-                      $subscriptions            = []
+                      $subscriptions            = [],
+                      $write_config             = true
                       ) {
 
   include sensu::package
@@ -22,10 +23,12 @@ define sensu::client(
     password        => $rabbitmq_password,
   }
 
-  sensu_client_config { $::fqdn:
-    client_name   => $name,
-    address       => $address,
-    subscriptions => $subscriptions,
+  if $write_config == true {
+    sensu_client_config { $::fqdn:
+      client_name   => $name,
+      address       => $address,
+      subscriptions => $subscriptions,
+    }
   }
 
   service { 'sensu-client':
