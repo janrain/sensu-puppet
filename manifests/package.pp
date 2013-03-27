@@ -30,11 +30,18 @@ class sensu::package {
                 ensure 	 => latest,
                 provider => 'gem',
         }
+	file { '/etc/sensu':
+		ensure => directory,
+		owner  => root,
+		group  => root,
+		mode   => '0755',
+	}
 	file { '/etc/sensu/plugins':
 		ensure => directory,
 		owner  => root,
 		group  => root,
 		mode   => '0755',
+		require => File['/etc/sensu'],
 	}
 	file { '/etc/sensu/plugins/check_disk.rb':
 		ensure => present,
