@@ -60,6 +60,14 @@ class sensu::package {
     mode     => '0755',
     require  => File['/etc/sensu/plugins'],
   }
+	file { '/etc/sensu/plugins/check_response.rb':
+	  ensure   => present,
+	  source   => 'puppet:///modules/sensu/plugins/check_response.rb',
+    owner    => root,
+    group    => root,
+    mode     => '0755',
+    require  => File['/etc/sensu/plugins'],
+  }
   #this is because haproxy package conflicts with the apt package!
   exec { "gem-package-haproxy":
     command    => 'gem install haproxy --version 0.0.4',
