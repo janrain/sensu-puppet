@@ -30,18 +30,11 @@ class sensu::package {
                 ensure 	 => latest,
                 provider => 'gem',
         }
-	file { '/etc/sensu':
-		ensure => directory,
-		owner  => root,
-		group  => root,
-		mode   => '0755',
-	}
 	file { '/etc/sensu/plugins':
 		ensure => directory,
 		owner  => root,
 		group  => root,
 		mode   => '0755',
-		require => File['/etc/sensu'],
 	}
 	file { '/etc/sensu/plugins/check_disk.rb':
 		ensure => present,
@@ -62,6 +55,14 @@ class sensu::package {
 	file { '/etc/sensu/plugins/check-haproxy.rb':
 	  ensure   => present,
 	  source   => 'puppet:///modules/sensu/plugins/check-haproxy.rb',
+    owner    => root,
+    group    => root,
+    mode     => '0755',
+    require  => File['/etc/sensu/plugins'],
+  }
+	file { '/etc/sensu/plugins/check_response.rb':
+	  ensure   => present,
+	  source   => 'puppet:///modules/sensu/plugins/check_response.rb',
     owner    => root,
     group    => root,
     mode     => '0755',
