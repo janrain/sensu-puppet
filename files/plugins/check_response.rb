@@ -1,5 +1,5 @@
-#check_http re-written in Ruby for reasons that made sense at the time
 #!/usr/bin/env ruby
+#check_http re-written in Ruby for reasons that made sense at the time
 
 require 'net/http'
 require 'uri'
