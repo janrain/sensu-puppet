@@ -18,18 +18,18 @@ class sensu::package {
 			logoutput => on_failure;
 		'sensu-update':
 			command     => 'apt-get update',
-		   	path        => '/usr/bin',
+	   	path        => '/usr/bin',
 			before	    => Package['sensu'],
-		    	refreshonly => true;
+    	refreshonly => true;
 	}
 	package { 'sensu':
 		ensure   => latest,
 		provider => 'apt',
 	}
 	package { 'sensu-plugin':
-                ensure 	 => latest,
-                provider => 'gem',
-        }
+     ensure 	 => latest,
+     provider => 'gem',
+  }
 	file { '/etc/sensu':
 		ensure => directory,
 		owner  => root,
@@ -37,27 +37,27 @@ class sensu::package {
 		mode   => '0755',
 	}
 	file { '/etc/sensu/plugins':
-		ensure => directory,
-		owner  => root,
-		group  => root,
-		mode   => '0755',
-		require => File['/etc/sensu'],
+		ensure  => directory,
+		owner   => root,
+		group   => root,
+		mode    => '0755',
+		require => [File['/etc/sensu'], Package['sensu'],]
 	}
 	file { '/etc/sensu/plugins/check_disk.rb':
-		ensure => present,
-		source => 'puppet:///modules/sensu/plugins/check_disk.rb',
-		owner  => root,
-		group  => root,
-		mode   => '0755',
-		require => File['/etc/sensu/plugins'],
+		ensure  => present,
+		source  => 'puppet:///modules/sensu/plugins/check_disk.rb',
+		owner   => root,
+		group   => root,
+		mode    => '0755',
+		require => [File['/etc/sensu'], Package['sensu'],]
 	}
 	file { '/etc/sensu/plugins/check-mem.sh':
-		ensure => present,
-		source => 'puppet:///modules/sensu/plugins/check-mem.sh',
-		owner  => root,
-		group  => root,
-		mode   => '0755',
-		require => File['/etc/sensu/plugins'],
+		ensure  => present,
+		source  => 'puppet:///modules/sensu/plugins/check-mem.sh',
+		owner   => root,
+		group   => root,
+		mode    => '0755',
+		require => [File['/etc/sensu'], Package['sensu'],]
 	}
 	file { '/etc/sensu/plugins/check-haproxy.rb':
 	  ensure   => present,
@@ -65,7 +65,7 @@ class sensu::package {
     owner    => root,
     group    => root,
     mode     => '0755',
-    require  => File['/etc/sensu/plugins'],
+    require  => [File['/etc/sensu'], Package['sensu'],]
   }
 	file { '/etc/sensu/plugins/check_response.rb':
 	  ensure   => present,
@@ -73,7 +73,7 @@ class sensu::package {
     owner    => root,
     group    => root,
     mode     => '0755',
-    require  => File['/etc/sensu/plugins'],
+    require  => [File['/etc/sensu'], Package['sensu'],]
   }
   #this is because haproxy package conflicts with the apt package!
   exec { "gem-package-haproxy":
