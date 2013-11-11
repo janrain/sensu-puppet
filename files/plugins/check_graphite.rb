@@ -114,7 +114,12 @@ class GraphiteFetcher
 
     uri = URI.parse(full_url)
     $log.debug("Initiating HTTP request to url:#{full_url}")
-    res = Net::HTTP.get_response(uri)
+    begin
+      res = Net::HTTP.get_response(uri)
+    rescue Timeout::Error => e
+      puts "WARNING: Caught Timeout exception: #{e.message}"
+      exit 0
+    end
 
     res.value
     res.body.chomp.split("\n").each do |line|
