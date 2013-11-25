@@ -69,7 +69,7 @@ class sensu::package {
   }
 	file { '/etc/sensu/plugins/check-load.rb':
 	  ensure   => present,
-	  source   => 'puppet:///modules/sensu/plugins/check_response.rb',
+	  source   => 'puppet:///modules/sensu/plugins/check-load.rb',
     owner    => root,
     group    => root,
     mode     => '0755',
