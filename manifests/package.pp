@@ -67,7 +67,7 @@ class sensu::package {
     mode     => '0755',
     require  => [File['/etc/sensu'], Package['sensu'],]
   }
-	file { '/etc/sensu/plugins/check_response.rb':
+	file { '/etc/sensu/plugins/check-load.rb':
 	  ensure   => present,
 	  source   => 'puppet:///modules/sensu/plugins/check_response.rb',
     owner    => root,
