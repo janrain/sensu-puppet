@@ -25,8 +25,12 @@ if [ "$hlp" = "yes" ]; then
   exit 0
 fi
 
-(echo -en "PING\r\n"; sleep 1) | nc $HOST $PORT | grep -q PONG
-RESULT=$?
+for i in {1..3}; do
+    (echo -en "PING\r\n"; sleep $i) | nc $HOST $PORT | grep -q PONG
+    RESULT=$?
+    [ $RESULT -eq 0 ] && break
+done
+
 case $RESULT in
   [0]) echo "OK"
     exit 0;;
