@@ -23,7 +23,7 @@ class sensu::package {
     	refreshonly => true;
 	}
 	package { 'sensu':
-		ensure   => latest,
+		ensure   => '1.4.5',
 		provider => 'apt',
 	}
 	package { 'sensu-plugin':
